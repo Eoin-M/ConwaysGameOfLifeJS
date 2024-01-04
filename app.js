@@ -1,4 +1,9 @@
 const cell_size = 25
+const colors = {
+	born: "#34b1eb",
+	remain: "#5feb34",
+	die: "#eb4034"
+}
 
 // Get no. cells to fill current window
 const cols = Math.ceil(window.innerWidth / cell_size),  	// Max x
@@ -17,15 +22,15 @@ let cells = [[]]
 
 function init() {
 	for (let x = 0; x < cols; x++) {
-		cells[x] = [];
+		cells[x] = []
 		for (let y = 0; y < rows; y++) {
-			cells[x][y] = Math.random() > 0.8 ? "34b1eb" : null;
+			cells[x][y] = Math.random() > 0.8 ? colors.born : null
 		}
 	}
 }
 
 function draw() {
-	ctx.clearRect(0, 0, cgl_canvas.width, cgl_canvas.height);
+	ctx.clearRect(0, 0, cgl_canvas.width, cgl_canvas.height)
 
 	for (let x = 0; x < cols; x++) {
 		for (let y = 0; y < rows; y++) {
@@ -45,7 +50,7 @@ function eval() {
 
 		for (let y = 0; y < rows; y++) {
 			// Check cells 8 neighbours
-			let neighbours = 0;
+			let neighbours = 0
 			for (let xx = -1; xx <= 1; xx++) {
 				for (let yy = -1; yy <= 1; yy++) {
 					// Don't include current cell
@@ -65,16 +70,16 @@ function eval() {
 			if (neighbours === 2) {
 				// Cell has 2 neighbours, dead cell stays dead, alive cell stays alive
 				if (cells[x][y]) {
-					cpy[x][y] = 'yellow'
+					cpy[x][y] = colors.remain
 				} else {
-					cpy[x][y] = null
+					cpy[x][y] = ""
 				}
 			} else if (neighbours === 3) {
 				// Cell has 3 neighbours, dead cell springs to life, alive cell remains alive
-				cpy[x][y] = 'blue'
+				cpy[x][y] = colors.born
 			} else {
 				// Cell has any other no. of neighbours, it dies or remains dead
-				cpy[x][y] = null
+				cpy[x][y] = ""
 			}
 		}
 	}
@@ -98,4 +103,4 @@ function getCellColor() {
 
 setup()
 
-// setTimeout(eval, 10000);
+// setTimeout(eval, 10000)
