@@ -1,8 +1,8 @@
 const cell_size = 25
 const colors = {
-	born: "#34b1eb",
-	remain: "#5feb34",
-	die: "#eb4034"
+	born: "#34b1eb",	// blue
+	remain: "#085c35",	// green
+	die: "#eb4034"		// red
 }
 
 // Get no. cells to fill current window
@@ -67,20 +67,7 @@ function eval() {
 				}
 			}
 			
-			if (neighbours === 2) {
-				// Cell has 2 neighbours, dead cell stays dead, alive cell stays alive
-				if (cells[x][y]) {
-					cpy[x][y] = colors.remain
-				} else {
-					cpy[x][y] = ""
-				}
-			} else if (neighbours === 3) {
-				// Cell has 3 neighbours, dead cell springs to life, alive cell remains alive
-				cpy[x][y] = colors.born
-			} else {
-				// Cell has any other no. of neighbours, it dies or remains dead
-				cpy[x][y] = ""
-			}
+			cpy[x][y] = getCellColor(cells[x][y], neighbours)
 		}
 	}
 
@@ -97,8 +84,18 @@ function loop() {
 	draw()
 }
 
-function getCellColor() {
-
+function getCellColor(cell, neighbours) {
+	switch (neighbours) {
+	case 2:
+		// Cell has 2 neighbours, dead cell stays dead, alive cell stays alive
+		return cell ? colors.remain : ""
+	case 3:
+		// Cell has 3 neighbours, dead cell springs to life, alive cell remains alive
+		return cell ? colors.remain : colors.born
+	default :
+		// Cell has any other no. of neighbours, it dies or remains dead
+		return ""
+	}
 }
 
 setup()
