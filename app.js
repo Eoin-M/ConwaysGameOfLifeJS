@@ -1,5 +1,5 @@
-const cell_size = 50
-let anim_time = 0, anim_max = 30
+const cell_size = 10
+let anim_time = 0, anim_max = 5
 const state = {
 	born: 1,
 	born_to_remain: 2,
@@ -39,6 +39,8 @@ function init() {
 
 function draw() {
 	ctx.clearRect(0, 0, cgl_canvas.width, cgl_canvas.height)
+	ctx.fillStyle = "#202124"
+	ctx.fillRect(0, 0, cgl_canvas.width, cgl_canvas.height)
 
 	for (let x = 0; x < cols; x++) {
 		for (let y = 0; y < rows; y++) {
