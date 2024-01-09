@@ -13,22 +13,19 @@ const state_color = {
 	die: {r: 128, g: 59, b: 59},	// red
 }
 
-// Get no. cells to fill current window
-const cols = Math.ceil(window.innerWidth / cell_size),  	// Max x
-	rows = Math.ceil(window.innerHeight / cell_size)		// Max y
-	
-console.log("Rows:", rows, "Cols:", cols)
-
 const cgl_canvas = document.getElementById("cgl_canvas")
 let ctx = cgl_canvas.getContext("2d")
 
-// Set canvas height programmatically
-cgl_canvas.width = window.innerWidth
-cgl_canvas.height = window.innerHeight
+// no. cells to fill current canvas size
+let cols, rows
 
 let cells = [[]]
 
 function init() {
+	cols = Math.ceil(cgl_canvas.offsetWidth / cell_size)  	// Max x
+	rows = Math.ceil(cgl_canvas.offsetHeight / cell_size)	// Max y
+	console.log("Rows:", rows, "Cols:", cols)
+
 	for (let x = 0; x < cols; x++) {
 		cells[x] = []
 		for (let y = 0; y < rows; y++) {
@@ -126,7 +123,7 @@ function eval() {
 	}
 
 	cells = cpy
-}
+	}
 
 function getCellState(cell, neighbours) {
 	switch (neighbours) {
