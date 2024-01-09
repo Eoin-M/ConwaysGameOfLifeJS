@@ -9,13 +9,15 @@
 
 <canvas id="cgl_canvas"></canvas>
 
-<script>
-    const cgl = document.getElementById("cgl_canvas")
+<!-- <script type="module" src="./app.js"></script> -->
+<script type="module">
+    const cgl_canvas = document.getElementById("cgl_canvas")
     // Set canvas height programmatically
-    cgl.width = window.innerWidth
-    cgl.height = window.innerHeight
-</script>
+    cgl_canvas.width = window.innerWidth
+    cgl_canvas.height = window.innerHeight
 
-<script src="./app.js"></script>
+    import cgl from "./app.js"
+    cgl(cgl_canvas)
+</script>
 </body>
 </html>

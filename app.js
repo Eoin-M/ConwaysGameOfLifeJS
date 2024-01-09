@@ -1,5 +1,5 @@
 const cell_size = 10
-let anim_time = 0, anim_max = 5
+let anim_time = 0
 const state = {
 	born: 1,
 	born_to_remain: 2,
@@ -13,8 +13,8 @@ const state_color = {
 	die: {r: 128, g: 59, b: 59},	// red
 }
 
-const cgl_canvas = document.getElementById("cgl_canvas")
-let ctx = cgl_canvas.getContext("2d")
+let cgl_canvas, ctx
+let seed, anim_max
 
 // no. cells to fill current canvas size
 let cols, rows
@@ -22,6 +22,7 @@ let cols, rows
 let cells = [[]]
 
 function init() {
+	ctx = cgl_canvas.getContext("2d")
 	cols = Math.ceil(cgl_canvas.offsetWidth / cell_size)  	// Max x
 	rows = Math.ceil(cgl_canvas.offsetHeight / cell_size)	// Max y
 	console.log("Rows:", rows, "Cols:", cols)
@@ -29,7 +30,7 @@ function init() {
 	for (let x = 0; x < cols; x++) {
 		cells[x] = []
 		for (let y = 0; y < rows; y++) {
-			cells[x][y] = Math.random() > 0.8 ? state.born : 0
+			cells[x][y] = Math.random() > seed ? state.born : 0
 		}
 	}
 }
@@ -93,7 +94,7 @@ function getColorInterpolationValue(start, target, itr) {
 	}
 }
 
-function eval() {
+function evaluate() {
 	let cpy = []
 
 	for (let x = 0; x < cols; x++) {
@@ -139,14 +140,16 @@ function getCellState(cell, neighbours) {
 	}
 }
 
-function setup() {
+function cgl(canvas_el, seed = 0.8, animation_speed = 5) {
+	cgl_canvas = canvas_el
+
 	init()
 	window.requestAnimationFrame(draw)
 }
 
 function loop() {
-	eval()
+	evaluate()
 	window.requestAnimationFrame(draw)
 }
 
-setup()
+export default cgl 
