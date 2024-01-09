@@ -58,6 +58,7 @@ function draw() {
 	anim_time++
 	if (anim_time > anim_max) {
 		anim_time = 0
+		loop()
 	} else {
 		window.requestAnimationFrame(draw)
 	}
@@ -127,16 +128,6 @@ function eval() {
 	cells = cpy
 }
 
-function setup() {
-	init()
-	window.requestAnimationFrame(draw)
-}
-
-function loop() {
-	eval()
-	window.requestAnimationFrame(draw)
-}
-
 function getCellState(cell, neighbours) {
 	switch (neighbours) {
 	case 2:
@@ -151,6 +142,14 @@ function getCellState(cell, neighbours) {
 	}
 }
 
-setup()
+function setup() {
+	init()
+	window.requestAnimationFrame(draw)
+}
 
-// setTimeout(eval, 10000)
+function loop() {
+	eval()
+	window.requestAnimationFrame(draw)
+}
+
+setup()
