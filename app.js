@@ -1,5 +1,4 @@
 const cell_size = 10
-let anim_time = 0
 const state = {
 	born: 1,
 	born_to_remain: 2,
@@ -13,8 +12,9 @@ const state_color = {
 	die: {r: 128, g: 59, b: 59},	// red
 }
 
-let cgl_canvas, ctx
-let seed, anim_max
+let cgl_canvas, cgl_ctx
+let cgl_seed, cgl_anim_max
+let anim_time = 0
 
 // no. cells to fill current canvas size
 let cols, rows
@@ -22,7 +22,7 @@ let cols, rows
 let cells = [[]]
 
 function init() {
-	ctx = cgl_canvas.getContext("2d")
+	cgl_ctx = cgl_canvas.getContext("2d")
 	cols = Math.ceil(cgl_canvas.offsetWidth / cell_size)  	// Max x
 	rows = Math.ceil(cgl_canvas.offsetHeight / cell_size)	// Max y
 	console.log("Rows:", rows, "Cols:", cols)
@@ -30,13 +30,13 @@ function init() {
 	for (let x = 0; x < cols; x++) {
 		cells[x] = []
 		for (let y = 0; y < rows; y++) {
-			cells[x][y] = Math.random() > seed ? state.born : 0
+			cells[x][y] = Math.random() > cgl_seed ? state.born : 0
 		}
 	}
 }
 
 function draw() {
-	ctx.clearRect(0, 0, cgl_canvas.width, cgl_canvas.height)
+	cgl_ctx.clearRect(0, 0, cgl_canvas.width, cgl_canvas.height)
 
 	for (let x = 0; x < cols; x++) {
 		for (let y = 0; y < rows; y++) {
@@ -47,27 +47,27 @@ function draw() {
 				if (cells[x][y] === state.born_to_remain || cells[x][y] === state.remain) itr = 1
 				let offset = (cell_size - (cell_size * itr)) /2
 
-				ctx.fillStyle = `rgb(${c.r}, ${c.g}, ${c.b})`
-				ctx.fillRect((x * cell_size) + offset, (y * cell_size) + offset, cell_size * itr, cell_size * itr)
+				cgl_ctx.fillStyle = `rgb(${c.r}, ${c.g}, ${c.b})`
+				cgl_ctx.fillRect((x * cell_size) + offset, (y * cell_size) + offset, cell_size * itr, cell_size * itr)
 			}
 		}
 	}
 
 	anim_time++
-	if (anim_time > anim_max) {
+	// If the animation has finished, calculate next cell layout and restart animation
+	if (anim_time > cgl_anim_max) {
 		anim_time = 0
-		loop()
-	} else {
-		window.requestAnimationFrame(draw)
+		evaluate()
 	}
+	window.requestAnimationFrame(draw)
 }
 
 function getCellInterpolation(cell) {
 	switch (cell) {
 		case state.born:
-			return anim_time ** 2 / anim_max ** 2
+			return anim_time ** 2 / cgl_anim_max ** 2
 		default:
-			return 1 - (anim_time ** 2 / anim_max ** 2)
+			return 1 - (anim_time ** 2 / cgl_anim_max ** 2)
 	}
 }
 
@@ -140,16 +140,11 @@ function getCellState(cell, neighbours) {
 	}
 }
 
-function cgl(canvas_el, seed = 0.8, animation_speed = 5) {
+export default function CGL(canvas_el, seed = 0.8, animation_speed = 10) {
 	cgl_canvas = canvas_el
+	cgl_seed = seed
+	cgl_anim_max = 100 / animation_speed
 
 	init()
 	window.requestAnimationFrame(draw)
 }
-
-function loop() {
-	evaluate()
-	window.requestAnimationFrame(draw)
-}
-
-export default cgl 

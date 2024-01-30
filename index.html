@@ -3,21 +3,20 @@
 <head>
 <link rel="stylesheet" href="./style.css" />
 </head>
-<body>
+<body style="background-color: #202124; overflow: hidden;">
 
 <noscript>This website requires JavaScript to run! Please enable it :)</noscript>
 
 <canvas id="cgl_canvas"></canvas>
 
-<!-- <script type="module" src="./app.js"></script> -->
 <script type="module">
     const cgl_canvas = document.getElementById("cgl_canvas")
     // Set canvas height programmatically
     cgl_canvas.width = window.innerWidth
     cgl_canvas.height = window.innerHeight
 
-    import cgl from "./app.js"
-    cgl(cgl_canvas)
+    import CGL from "./app.js"
+    CGL(cgl_canvas)
 </script>
 </body>
 </html>
