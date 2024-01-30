@@ -25,4 +25,6 @@ import the module and pass it a reference to your canvas
 
 ## Example
 
-<img src="example.gif" width="75%">
+### View a live preview here --> https://eoin-m.github.io/ConwaysGameOfLifeJS/
+
+<img src="example.gif" width="50%">
