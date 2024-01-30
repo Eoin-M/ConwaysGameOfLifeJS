@@ -23,8 +23,8 @@ let cells = [[]]
 
 function init() {
 	cgl_ctx = cgl_canvas.getContext("2d")
-	cols = Math.ceil(cgl_canvas.offsetWidth / cell_size)  	// Max x
-	rows = Math.ceil(cgl_canvas.offsetHeight / cell_size)	// Max y
+	cols = Math.floor(cgl_canvas.offsetWidth / cell_size)	// Max x
+	rows = Math.floor(cgl_canvas.offsetHeight / cell_size)	// Max y
 	console.log("Rows:", rows, "Cols:", cols)
 
 	for (let x = 0; x < cols; x++) {
@@ -140,7 +140,7 @@ function getCellState(cell, neighbours) {
 	}
 }
 
-export default function CGL(canvas_el, seed = 0.8, animation_speed = 10) {
+export default function CGL(canvas_el, seed = 0.8, animation_speed = 8) {
 	cgl_canvas = canvas_el
 	cgl_seed = seed
 	cgl_anim_max = 100 / animation_speed
