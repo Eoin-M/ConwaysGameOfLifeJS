@@ -140,10 +140,10 @@ function getCellState(cell, neighbours) {
 	}
 }
 
-export default function CGL(canvas_el, seed = 0.8, animation_speed = 8) {
+export default function CGL(canvas_el, seed = 0.8, speed = 8) {
 	cgl_canvas = canvas_el
 	cgl_seed = seed
-	cgl_anim_max = 100 / animation_speed
+	cgl_anim_max = 100 / speed
 
 	init()
 	window.requestAnimationFrame(draw)
