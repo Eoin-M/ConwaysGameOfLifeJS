@@ -65,9 +65,9 @@ function draw() {
 function getCellInterpolation(cell) {
 	switch (cell) {
 		case state.born:
-			return anim_time ** 2 / cgl_anim_max ** 2
+			return Math.pow(anim_time, 2) / Math.pow(cgl_anim_max, 2)
 		default:
-			return 1 - (anim_time ** 2 / cgl_anim_max ** 2)
+			return 1 - (Math.pow(anim_time, 2) / Math.pow(cgl_anim_max, 2))
 	}
 }
 
